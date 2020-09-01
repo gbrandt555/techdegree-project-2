@@ -17,66 +17,45 @@ def main_menu():
         try:
             if option != '1' and option != '2':
                 raise ValueError("Try again!")
+        
         except ValueError as err:
             print("That is an invalid option")
             print(err)
-        if option == '1':
-            teams_menu()
-            continue
-        elif option == '2':
-            print("Goodbye!")
+        
+        else:
             break
+    
+    return option
 
 
 def teams_menu():
-    new_panthers = []
-    new_bandits = []
-    new_warriors = []
     print("\n--Teams Menu--\n")
-    print("1.Panthers\n2.Bandits\n3.Warriors\n")
+    print("1.Panthers\n2.Bandits\n3.Warriors\nEnter \"b\" to go back")
     while True:
         option = input("Please choose an option. ")
         try:
-            if option != '1' and option != '2' and option != '3':
+            if option != '1' and option != '2' and option != '3' and option != 'b':
                 raise ValueError("Try again!")
+        
         except ValueError as err:
             print("That is an invalid option")
             print(err)
+        
         if option == '1':
-            print("\nPanthers\nTotal players: {}".format(len(panthers)))
-            for player in panthers:
-                new_panthers.append(player['name'])
-            print(", ".join(new_panthers))
-            back_to_main()
-            break
-        elif option == '2':
-            print("\nBandits\nTotal players: {}".format(len(bandits)))
-            for player in bandits:
-                new_bandits.append(player['name'])
-            print(", ".join(new_bandits))
-            back_to_main()
-            break
-        elif option == '3':
-            print("\nWarriors\nTotal players: {}".format(len(warriors)))
-            for player in warriors:
-                new_warriors.append(player['name'])
-            print(", ".join(new_warriors))
-            back_to_main()
-            break
-
-
-def back_to_main():
-    print("\n1.Main Menu\n2.Teams Menu\n3.Quit")
-    while True:
-        option = input("\nWhat would you like to do? ")
-        if option == '1':
-            main_menu()
-        elif option == '2':
-            teams_menu()
-        elif option == '3':
-            print("Goodbye!")
-            break 
+            print_team_stats("Panthers", panthers)
             
+        elif option == '2':
+            print_team_stats("Bandits", bandits)
+            
+        elif option == '3':
+            print_team_stats("Warriors", warriors)
+        
+        elif option == 'b':
+            break
+
+    return option
+     
+
 def get_exp():
     for player in players:
         if player['experience'] == 'YES':
@@ -89,11 +68,26 @@ def get_height():
     for player in players:
         player['height'] = int(player['height'].split()[0])
 
+def print_team_stats(team_name, team):
+    player_names = []
+    print("\n{}\nTotal players: {}".format(team_name, len(bandits)))
+    for player in team:
+        player_names.append(player['name'])
+    print(", ".join(player_names))
+
 
 if __name__ == "__main__":
     get_exp()
     get_height()
-    main_menu()
+    user_option = main_menu()
+    while user_option != '2':
+        team_option = None
+        while team_option != 'b':
+            team_option = teams_menu()
+        user_option = main_menu()
+    
+    
+
     
     
     
