@@ -35,7 +35,7 @@ def teams_menu():
         option = input("\nPlease choose an option. ")
         try:
             if option != '1' and option != '2' and option != '3' and option != 'b':
-                raise ValueError("Try again!")
+                raise ValueError("Try again! Choose option 1, 2, 3, or press 'b' to exit")
         
         except ValueError as err:
             print("That is an invalid option")
